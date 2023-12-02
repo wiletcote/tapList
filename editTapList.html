@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Edit Tab List</title>
+        <link rel="stylesheet" href="editTapList.css">
+        <script src="tabdb.js"></script>
+        <script src="beerLists.js"></script>
+        
+    </head>
+    <body>
+        <script>
+            let breweryList;
+            let beerList;
+            //remove the tap from the database and page and refresh.
+            const deleteCurrentTap = (id) => {
+                console.log('deleting tap ' + id);
+                deleteTap(id).then(function(response) {
+                    getCurrentList();
+                }).catch(function(response) {
+                    alert('Error Deleting Tap');
+                });
+            }
+            const editCurrentTap = (id) => {
+                //populate and update, not add.
+            }
+            //Div for showing a tap
+            const beerDiv = (aBeer) => {
+                const abv = 'abv' in aBeer ? aBeer.abv : 'N/A';
+                const ibu = 'ibu' in aBeer ? aBeer.ibu : 'N/A';
+                const price = 'price' in aBeer ? aBeer.price : 'N/A';
+                return  `
+                    <span style="width: 50%;">
+                        <div>
+                            <span class="beerName">${aBeer.beer}</span> - <span>${aBeer.brewery}</span>
+                            <span>
+                               <!-- <button onclick='editCurrentTap(${aBeer.id})'>Edit</button> -->
+                                <button onclick='deleteCurrentTap(${aBeer.id})'>Delete</button>
+                            </span>    
+                        </div>
+                        <div class="beerDetails">
+                            <span style="width: 50%;">${aBeer.style}, ABV: ${abv}, IBU: ${ibu}</span><span>${price}</span>
+                        </div>
+                    </span>
+                    `;
+            }   
+            //If a matching brewery is found, modify beer list to only show beers from that brewery.     
+            const filterBeers = (breweryIn) => {
+                console.log('finding beers for ' + breweryIn);
+                let breweryDataList = document.getElementById('breweries');
+                let matchingBrewery = breweryList.find(b => breweryIn === b.name);
+                if (matchingBrewery) {
+                    let tapForm = document.getElementById('newTap').elements;
+                    tapForm["breweryCity"].value = matchingBrewery.city;
+                    tapForm["breweryState"].value = matchingBrewery.state;
+                    populateBeerList(matchingBrewery.name);
+                }
+            }
+            const setBeerData = (beerIn) => {
+                let beerDataList = document.getElementById('beers');
+                let matchingBeer = beerList.find(b => beerIn == b.name);
+                if (matchingBeer) {
+                    let tapForm = document.getElementById('newTap').elements;
+                    tapForm["beerStyle"].value = matchingBeer.style;
+                    tapForm["beerABV"].value = matchingBeer.abv;
+                    tapForm["beerIBU"].value = matchingBeer.ibu;
+                }
+            }
+            const isValid = (tapForm) => {
+                let valid = true;
+                let warning = 'Please enter the following values: \n';
+                
+                if (tapForm["brewery"].value === '') {
+                    valid = false;
+                    warning += '     Brewery \n';
+                }
+                if (tapForm["beer"].value === '') {
+                    valid = false;
+                    warning += '     Beer Name \n';
+                }
+                if (tapForm["beerPrice"].value === '') {
+                    valid = false;
+                    warning += '     Beer Price \n';
+                }
+                if (tapForm["beerPrice"].value && isNaN(tapForm["beerPrice"].value)) {
+                    valid = false;
+                    warning += '     Price as a number';
+                }
+                if (!valid) {
+                    alert(warning);
+                }
+                return valid;
+            }
+            //get the list of breweries and add them to the Brewery dropdown
+            const populateBreweryList = () => {
+                let breweryDataList = document.getElementById('breweries');
+                getBreweries().then(function(response) {
+                    breweryList = response;
+                    breweryList.forEach(aBrewery => {
+                        let option = document.createElement('option');
+                        option.value = aBrewery.name;
+                        breweryDataList.appendChild(option);
+                    })
+                })
+            }
+            //Populate all beers (if no brewery specified) or beers for the passed in brewery
+            const populateBeerList = (aBrewery) => {
+                let beerDataList = document.getElementById('beers');
+                beerDataList.replaceChildren();  //clear out the list first.
+                getBeers(aBrewery).then(function(response) {
+                    beerList = response;
+                    beerList.forEach(aBeer => {
+                        let option = document.createElement('option');
+                        option.value = aBeer.name;
+                        beerDataList.appendChild(option);
+                    })
+                })
+            }
+            //Display the taps on the page.
+            const populateTaps = (currentList) => {
+                console.log('populating taps');
+                const tapListDiv = document.getElementById("currentList");
+                tapListDiv.innerHTML = '';
+                console.log('got current list: ' + currentList);
+                if (currentList) {
+                    console.log('loading list');
+                    currentList.forEach(aBeer => {
+                        tapListDiv.innerHTML += beerDiv(aBeer);
+                    });
+                } else {
+                    console.log('no taps');
+                    tapListDiv.innerHTML = "<div>No taps entered yet</div>";
+                }    
+            }
+            //Get the current list of taps from the db and display them.
+            const getCurrentList = () => {
+                getTapList().then(function(response) {
+                    console.log('got tap list successfully: ' + JSON.stringify(response));
+                    populateTaps(response);
+                }).catch(function(error) {
+                    console.log('failed to get tap list: ' + error);
+                });
+            }   
+            //Save the entered tap information.  TODO:  Validation? 
+            const saveTap = (tapForm) => {
+                console.log('in saveTap');
+                if (!isValid(tapForm)) return;
+                addTap(tapForm).then(function(response) {
+                    console.log('reload tap list');
+                    document.getElementById('newTap').reset();
+                    getCurrentList();
+                    populateBreweryList();
+                    populateBeerList();
+                }).catch(function(error) {
+                    console.log('error: ' + error);
+                });
+            }
+            //Open the DB, initialize if necessary, get the current list of taps, breweries, and beers
+            openBeerDB().then(function(response) {
+                console.log('opened successfully');
+                getCurrentList();
+                populateBreweryList();
+                populateBeerList();
+            }).catch(function(error) {
+                console.log('failed to open: ' + error);
+            });
+        </script>
+        <div>
+            <a class="floatRight" href="tapList.html">View Tap List</a>
+            <h1 style="text-align: center;">Enter data for beer on tap</h1>
+            <form name="newTap" id="newTap" action="" method="GET">
+                <div class="tapRow">
+                    <div>
+                        <h2>Select Brewery</h2>
+                        <table>
+                            <tr>
+                                <td><label for="brewery">Brewery:</label></td>
+                               <!-- <td><input id="breweryName" name="breweryName" type="text" required></td> -->
+                               <td>
+                                    <input list="breweries" id="brewery" oninput="filterBeers(brewery.value)"><datalist id="breweries"></datalist>
+                               </td>
+                            </tr>
+                            <tr>
+                                <td><label for="breweryCity">City:</label></td>
+                                <td><input id="breweryCity" name="breweryCity" type="text" ></td>
+                            </tr>
+                            <tr>
+                                <td><label for="breweryState">State:</label></td>
+                                <td><input id="breweryState" name="breweryState" type="text" ></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div>
+                        <h2>Select Beer</h2>
+                        <table>
+                            <tr>
+                                <td><label for="beers">Name:</label></td>
+                                <!-- <td><input id="beerName" name="beerName" type="text" required></td> -->
+                                <td><input list="beers" id="beer" oninput="setBeerData(beer.value)" ><datalist id="beers"></datalist></td>
+                            </tr>
+                            <tr>
+                                <td><label for="beerStyle">Style:</label></td>
+                                <td><input id="beerStyle" name="beerStyle" type="text" ></td>
+                            </tr>
+                            <tr>
+                                <td><label for="beerABV">ABV:</label></td>
+                                <td><input id="beerABV" name="beerABV" type="text" ></td>
+                            </tr>
+                            <tr>
+                                <td><label for="beerIBU">IBU:</label></td>
+                                <td><input id="beerIBU" name="beerIBU" type="text" ></td>
+                            </tr>
+                            <tr>
+                                <td><label for="beerPrice">Price:</label></td>
+                                <td><input id="beerPrice" name="beerPrice" type="text" ></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div style="text-align: center;">
+                    <input type="button" name="button" value="Add" onclick="saveTap(this.form)">
+                </div>
+            </form>
+        </div>
+        <h1 style="text-align: center;">Current Tap List</h1>
+        <div id="currentList"></div>
+    </body>
+</html>

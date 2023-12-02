@@ -1,0 +1,23 @@
+.tapRow {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+}
+.beerRow {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1em;
+}
+.beerName {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+.beerDetails {
+    display: flex;
+    justify-content: space-between;
+    width: 70%;
+}
+.floatRight {
+    float: right;
+}

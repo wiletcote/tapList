@@ -1,0 +1,38 @@
+html {
+    background-color: blueviolet;  
+}
+body {
+    border: 2px solid gray;
+    height: 80vh;
+}     
+.orangeBG {
+  background-color: orangered;
+}
+.fillMostOfPage {
+    display: flex;
+    justify-content: center;
+}
+.twoPerRow {
+    display: flex;
+    justify-content: space-between;
+    
+}
+div {
+    border: 2px solid black;
+}
+.oneBeer {
+    width: 45%;
+    height: 4em;
+    margin: 10px;
+}
+.holdsAllBeers {
+    display: flex;
+    justify-content: space-between;
+    background-color: orangered;
+    width: 90%;
+}
+.wrapsAllBeersContainer {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+}

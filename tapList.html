@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Current Tab List</title>
+        <link rel="stylesheet" href="tapList.css"> 
+        <script src="beerLists.js"></script>   
+        <script src="tabdb.js"></script>
+    </head>
+    <body>
+        <script>
+            const beerDiv = (aBeer) => {
+                const abv = 'abv' in aBeer ? aBeer.abv + '%' : 'N/A';
+                const ibu = 'ibu' in aBeer ? aBeer.ibu : 'N/A';
+                const price = 'price' in aBeer ? '$' + aBeer.price : 'N/A';
+                return  `
+                    <span>
+                        <div>
+                            <span class="beerName">${aBeer.beer}</span> - <span>${aBeer.brewery}</span>
+                        </div>
+                        <div class="beerDetails">
+                            <span style="width: 80%;">${aBeer.style}, ABV: ${abv}, IBU: ${ibu}</span><span>${price}</span>
+                        </div>
+                        <hr>
+                    </span>
+                    `;
+            }
+            const populateTaps = (currentList) => {
+                console.log('populating taps');
+                const tapListDiv = document.getElementById("allTaps");
+                tapListDiv.innerHTML = '';
+                if (currentList && currentList.length > 0) {
+                    console.log('loading list');
+                    currentList.forEach(aBeer => {
+                        tapListDiv.innerHTML += beerDiv(aBeer);
+                    });
+                } else {
+                    console.log('no taps');
+                    tapListDiv.innerHTML = "<div style='text-align: center; width: 100%'><span>There is nothing on tap. Please click Edit Tap List in the upper right corner</span></div>";
+                }    
+            }
+
+            const getCurrentList = () => {
+                getTapList().then(function(response) {
+                    console.log('got tap list successfully: ' + JSON.stringify(response));
+                    populateTaps(response);
+                }).catch(function(error) {
+                    console.log('failed to get tap list: ' + error);
+                });
+            }    
+
+            openBeerDB().then(function(response) {
+                console.log('opened successfully');
+                getCurrentList();
+            }).catch(function(error) {
+                console.log('failed to open: ' + error);
+            });
+        </script>
+        
+        <div style="text-align: center;">
+            <a class="floatRight" href="editTapList.html">Edit Tap List</a>
+            <h1>JP's Current Taplist</h1>
+        </div>
+        <hr>
+        <div class="oneMoreContainer">
+            <div class="beerContainer">
+                <div id="allTaps" class="beerRow">
+                    <span style="width: 50%;">
+                        <div>
+                            <span class="beerName">Psuedo Sue</span> - <span>Pipeworks Brewing Company</span>
+                        </div>
+                        <div class="beerDetails">
+                            <span style="width: 50%;">Hazy Pale Ale</span><span>ABV 5.8%</span><span>IBU 23</span><span>$5</span>
+                        </div>
+                    </span>
+                    <span style="width: 50%;">
+                        <div>
+                            <span class="beerName">Hopslam</span> - <span>Bells Brewing Company</span>
+                        </div>
+                        <div class="beerDetails">
+                            <span style="width: 50%;">Imperial IPA</span><span>ABV 9.8%</span><span>IBU 65</span><span>$7</span>
+                        </div>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
