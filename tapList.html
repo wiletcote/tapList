@@ -13,16 +13,33 @@
                 const ibu = 'ibu' in aBeer ? aBeer.ibu : 'N/A';
                 const price = 'price' in aBeer ? '$' + aBeer.price : 'N/A';
                 return  `
-                    <span>
+                    <div class="content">
+                        <table width="100%">
+                            <tr>
+                                <td width="80%">
+                                    <span class="beerName">${aBeer.beer}</span> <br> 
+                                    <span class="aboutBeer">${aBeer.brewery}</span> - <span style="width: 80%;">${aBeer.style}</span>
+                                </td>
+                                <td class="smallTD">
+                                    <span class="abv">${abv}</span>
+                                </td>
+                                <td class="smallTD">
+                                    <span class="price" >${price}</span>
+                                </td>
+                            </tr        
+                        </table>
+                    </div>
+                `;
+                /*return  `
+                    <div class="content">
                         <div>
                             <span class="beerName">${aBeer.beer}</span> - <span>${aBeer.brewery}</span>
                         </div>
                         <div class="beerDetails">
                             <span style="width: 80%;">${aBeer.style}, ABV: ${abv}, IBU: ${ibu}</span><span>${price}</span>
                         </div>
-                        <hr>
-                    </span>
-                    `;
+                    </div>
+                `;*/
             }
             const populateTaps = (currentList) => {
                 console.log('populating taps');
@@ -55,31 +72,29 @@
                 console.log('failed to open: ' + error);
             });
         </script>
-        
-        <div style="text-align: center;">
-            <a class="floatRight" href="editTapList.html">Edit Tap List</a>
-            <h1>JP's Current Taplist</h1>
+        <a class="floatRight" href="editTapList.html">
+            <img src="images/gear_icon.svg" alt="edit taplsit" height="24px" width="24px" />
+        </a>
+        <div class="hdrTitle">
+            JP's Current Taplist
         </div>
-        <hr>
-        <div class="oneMoreContainer">
-            <div class="beerContainer">
-                <div id="allTaps" class="beerRow">
-                    <span style="width: 50%;">
-                        <div>
-                            <span class="beerName">Psuedo Sue</span> - <span>Pipeworks Brewing Company</span>
-                        </div>
-                        <div class="beerDetails">
-                            <span style="width: 50%;">Hazy Pale Ale</span><span>ABV 5.8%</span><span>IBU 23</span><span>$5</span>
-                        </div>
-                    </span>
-                    <span style="width: 50%;">
-                        <div>
-                            <span class="beerName">Hopslam</span> - <span>Bells Brewing Company</span>
-                        </div>
-                        <div class="beerDetails">
-                            <span style="width: 50%;">Imperial IPA</span><span>ABV 9.8%</span><span>IBU 65</span><span>$7</span>
-                        </div>
-                    </span>
+        <div class="wrapsBeerContainer">
+            <div id="allTaps" class="beerContainer">
+                <div style="width: 50%;">
+                    <div>
+                        <span class="beerName">Psuedo Sue</span> - <span>Pipeworks Brewing Company</span>
+                    </div>
+                    <div class="beerDetails">
+                        <span style="width: 50%;">Hazy Pale Ale</span><span>ABV 5.8%</span><span>IBU 23</span><span>$5</span>
+                    </div>
+                </div>
+                <sdivpan style="width: 50%;">
+                    <div>
+                        <span class="beerName">Hopslam</span> - <span>Bells Brewing Company</span>
+                    </div>
+                    <div class="beerDetails">
+                        <span style="width: 50%;">Imperial IPA</span><span>ABV 9.8%</span><span>IBU 65</span><span>$7</span>
+                    </div>
                 </div>
             </div>
         </div>

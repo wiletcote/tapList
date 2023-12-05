@@ -1,64 +1,94 @@
-
-body {
+html {
     background-image: url('images/woodbackground.jpg');
-    color: white;
-    height: 100vh;
 }
-.oneMoreContainer {
+body {
+    /* color: white; */
+    height: 95vh;
+}
+.hdrTitle {
+    width: 35%;
+    color: black;
+    height: 1.2em;
+    font-size: 3em;
+    background-color: beige;
+    text-align: center;
+    position: absolute;
+    top: -12.75em;
+    bottom: 0;
+    left: 0;
+    right: 0;   
+    margin: auto;
+}
+.wrapsBeerContainer {
+    color: white;
+    display: flex;
+    justify-content: center;
+    height: 90%;
+   
+    
+    /* border: 2px solid black;
     display: flex;
     align-items: center;
     justify-content: center;
+    
     width: 90%;
-    height: 90%;
+    height: 90%; */
 }
 .beerContainer {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 95%;
+    height: 100%;
+    margin-top: 3em;
     background-image: url('images/blackboard.jpg');
-    width: 90%;
-    height: 90%;
-}
-.beerRow {
-    display: flex;
+   /* display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    
+    */
 }
-.beerRow > span {
-    flex: 50%;
-    max-width: 50%;
+.beerContainer > div:first-child, .beerContainer > div:nth-child(2) {
+    margin-top: 2.25em;
+}
+.beerContainer > div {
+    flex: 48%;
+    max-width: 48%; 
+}
+.content {
+    width: 100%;
+    height: 4em;
+    margin: 10px;
 }
 .beerName {
-    font-size: 1.5em;
+    font-size: 2.5em;
     font-weight: bold;
+}
+.aboutBeer {
+    font-size: 1.5em;
+    padding-left: 10px;
 }
 .beerDetails {
     display: flex;
     justify-content: space-between;
-    width: 80%;
+    width: 95%;
     padding: 2px 10px 10px 0px;
 }
 .floatRight {
     float: right;
 }
-hr {
-    height: 1px;
-    margin: 10px 0;
-    background: -webkit-gradient(linear, 0 0, 100% 0, from(rgba(0, 0, 0, 0)), color-stop(0.5, #333333), to(rgba(0, 0, 0, 0)));
-    background: -webkit-linear-gradient(left, rgba(0, 0, 0, 0), #333333, rgba(0, 0, 0, 0));
-    background: -moz-linear-gradient(left, rgba(0, 0, 0, 0), #333333, rgba(0, 0, 0, 0));
-    background: -o-linear-gradient(left, rgba(0, 0, 0, 0), #333333, rgba(0, 0, 0, 0));
-    background: linear-gradient(left, rgba(0, 0, 0, 0), #333333, rgba(0, 0, 0, 0));
-    border: 0;
-  }
-  hr:after {
-    display: block;
-    content: '';
-    height: 8px;
-    background-image: -webkit-gradient(radial, 50% 0%, 0, 50% 0%, 116, color-stop(0%, #cccccc), color-stop(100%, rgba(255, 255, 255, 0)));
-    background-image: -webkit-radial-gradient(center top, farthest-side, #cccccc 0%, rgba(255, 255, 255, 0) 100%);
-    background-image: -moz-radial-gradient(center top, farthest-side, #cccccc 0%, rgba(255, 255, 255, 0) 100%);
-    background-image: -o-radial-gradient(center top, farthest-side, #cccccc 0%, rgba(255, 255, 255, 0) 100%);
-    background-image: radial-gradient(farthest-side at center top, #cccccc 0%, rgba(255, 255, 255, 0) 100%);
-  }
+table, td {
+    border: 1px solid gray;
+    border-collapse: collapse;
+}
+.smallTD {
+    width: 10%;
+    text-align: center;
+}
+.abv {
+    font-size: 1.5em;
+    color: orange;
+}
+.price {
+    font-size: 2em;
+    color: lightseagreen;
+}
