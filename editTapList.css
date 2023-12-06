@@ -1,3 +1,8 @@
+html {
+    background-image: url('images/blackboard.jpg');
+    color: white;
+}
+
 .tapRow {
     display: flex;
     justify-content: space-evenly;
@@ -20,4 +25,23 @@
 }
 .floatRight {
     float: right;
+}
+table, td {
+    border: 1px solid gray;
+    border-collapse: collapse;
+}
+.smallTD {
+    width: 5%;
+    text-align: center;
+}
+.dividerTD {
+    width: 2%;
+}
+.abv {
+    font-size: 1.25em;
+    color: orange;
+}
+.price {
+    font-size: 2em;
+    color: lightseagreen;
 }

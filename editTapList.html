@@ -3,6 +3,7 @@
     <head>
         <title>Edit Tab List</title>
         <link rel="stylesheet" href="editTapList.css">
+        <script src="tapListPopulator.js"></script>
         <script src="tabdb.js"></script>
         <script src="beerLists.js"></script>
         
@@ -24,25 +25,25 @@
                 //populate and update, not add.
             }
             //Div for showing a tap
-            const beerDiv = (aBeer) => {
-                const abv = 'abv' in aBeer ? aBeer.abv : 'N/A';
-                const ibu = 'ibu' in aBeer ? aBeer.ibu : 'N/A';
-                const price = 'price' in aBeer ? aBeer.price : 'N/A';
-                return  `
-                    <span style="width: 50%;">
-                        <div>
-                            <span class="beerName">${aBeer.beer}</span> - <span>${aBeer.brewery}</span>
-                            <span>
-                               <!-- <button onclick='editCurrentTap(${aBeer.id})'>Edit</button> -->
-                                <button onclick='deleteCurrentTap(${aBeer.id})'>Delete</button>
-                            </span>    
-                        </div>
-                        <div class="beerDetails">
-                            <span style="width: 50%;">${aBeer.style}, ABV: ${abv}, IBU: ${ibu}</span><span>${price}</span>
-                        </div>
-                    </span>
-                    `;
-            }   
+            // const beerDiv = (aBeer) => {
+            //     const abv = 'abv' in aBeer ? aBeer.abv : 'N/A';
+            //     const ibu = 'ibu' in aBeer ? aBeer.ibu : 'N/A';
+            //     const price = 'price' in aBeer ? aBeer.price : 'N/A';
+            //     return  `
+            //         <span style="width: 50%;">
+            //             <div>
+            //                 <span class="beerName">${aBeer.beer}</span> - <span>${aBeer.brewery}</span>
+            //                 <span>
+            //                    <!-- <button onclick='editCurrentTap(${aBeer.id})'>Edit</button> -->
+            //                     <button onclick='deleteCurrentTap(${aBeer.id})'>Delete</button>
+            //                 </span>    
+            //             </div>
+            //             <div class="beerDetails">
+            //                 <span style="width: 50%;">${aBeer.style}, ABV: ${abv}, IBU: ${ibu}</span><span>${price}</span>
+            //             </div>
+            //         </span>
+            //         `;
+            // }   
             //If a matching brewery is found, modify beer list to only show beers from that brewery.     
             const filterBeers = (breweryIn) => {
                 console.log('finding beers for ' + breweryIn);
@@ -93,6 +94,7 @@
             //get the list of breweries and add them to the Brewery dropdown
             const populateBreweryList = () => {
                 let breweryDataList = document.getElementById('breweries');
+                breweryDataList.replaceChildren();
                 getBreweries().then(function(response) {
                     breweryList = response;
                     breweryList.forEach(aBrewery => {
@@ -116,30 +118,31 @@
                 })
             }
             //Display the taps on the page.
-            const populateTaps = (currentList) => {
-                console.log('populating taps');
-                const tapListDiv = document.getElementById("currentList");
-                tapListDiv.innerHTML = '';
-                console.log('got current list: ' + currentList);
-                if (currentList) {
-                    console.log('loading list');
-                    currentList.forEach(aBeer => {
-                        tapListDiv.innerHTML += beerDiv(aBeer);
-                    });
-                } else {
-                    console.log('no taps');
-                    tapListDiv.innerHTML = "<div>No taps entered yet</div>";
-                }    
-            }
+            // const populateTaps = (currentList) => {
+            //     console.log('populating taps');
+            //     const tapListDiv = document.getElementById("currentList");
+            //     tapListDiv.innerHTML = '';
+            //     console.log('got current list: ' + currentList);
+            //     if (currentList) {
+            //         console.log('loading list');
+            //         currentList.forEach(aBeer => {
+            //             tapListDiv.innerHTML += beerDiv(aBeer);
+            //         });
+            //     } else {
+            //         console.log('no taps');
+            //         tapListDiv.innerHTML = "<div>No taps entered yet</div>";
+            //     }    
+            // }
             //Get the current list of taps from the db and display them.
-            const getCurrentList = () => {
-                getTapList().then(function(response) {
-                    console.log('got tap list successfully: ' + JSON.stringify(response));
-                    populateTaps(response);
-                }).catch(function(error) {
-                    console.log('failed to get tap list: ' + error);
-                });
-            }   
+            // const getCurrentList = () => {
+            //     getTapList().then(function(response) {
+            //         console.log('got tap list successfully: ' + JSON.stringify(response));
+            //         populateTaps(response);
+            //     }).catch(function(error) {
+            //         console.log('failed to get tap list: ' + error);
+            //     });
+            // }   
+            
             //Save the entered tap information.  TODO:  Validation? 
             const saveTap = (tapForm) => {
                 console.log('in saveTap');
@@ -165,7 +168,9 @@
             });
         </script>
         <div>
-            <a class="floatRight" href="tapList.html">View Tap List</a>
+            <a class="floatRight" href="tapList.html">
+                <img src="images/beer.svg" alt="edit taplist" style="color: white;" height="24px" width="24px" />
+            </a>
             <h1 style="text-align: center;">Enter data for beer on tap</h1>
             <form name="newTap" id="newTap" action="" method="GET">
                 <div class="tapRow">
@@ -174,7 +179,6 @@
                         <table>
                             <tr>
                                 <td><label for="brewery">Brewery:</label></td>
-                               <!-- <td><input id="breweryName" name="breweryName" type="text" required></td> -->
                                <td>
                                     <input list="breweries" id="brewery" oninput="filterBeers(brewery.value)"><datalist id="breweries"></datalist>
                                </td>
@@ -194,7 +198,6 @@
                         <table>
                             <tr>
                                 <td><label for="beers">Name:</label></td>
-                                <!-- <td><input id="beerName" name="beerName" type="text" required></td> -->
                                 <td><input list="beers" id="beer" oninput="setBeerData(beer.value)" ><datalist id="beers"></datalist></td>
                             </tr>
                             <tr>
@@ -222,6 +225,11 @@
             </form>
         </div>
         <h1 style="text-align: center;">Current Tap List</h1>
+        <div id="allTaps" class="beerContainer">
+            <table id="tapTable" width="90%" height="100%">
+                <!-- Taps get added programmatically here -->
+            </table>
+        </div>
         <div id="currentList"></div>
     </body>
 </html>
