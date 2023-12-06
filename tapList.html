@@ -2,69 +2,14 @@
 <html lang="en">
     <head>
         <title>Current Tab List</title>
+        <link rel="canonical" href="https://fonts.google.com/specimen/Permanent%2BMarker">
         <link rel="stylesheet" href="tapList.css"> 
         <script src="beerLists.js"></script>   
         <script src="tabdb.js"></script>
+        <script src="tapListPopulator.js"></script>
     </head>
     <body>
-        <script>
-            const beerDiv = (aBeer) => {
-                const abv = 'abv' in aBeer ? aBeer.abv + '%' : 'N/A';
-                const ibu = 'ibu' in aBeer ? aBeer.ibu : 'N/A';
-                const price = 'price' in aBeer ? '$' + aBeer.price : 'N/A';
-                return  `
-                    <div class="content">
-                        <table width="100%">
-                            <tr>
-                                <td width="80%">
-                                    <span class="beerName">${aBeer.beer}</span> <br> 
-                                    <span class="aboutBeer">${aBeer.brewery}</span> - <span style="width: 80%;">${aBeer.style}</span>
-                                </td>
-                                <td class="smallTD">
-                                    <span class="abv">${abv}</span>
-                                </td>
-                                <td class="smallTD">
-                                    <span class="price" >${price}</span>
-                                </td>
-                            </tr        
-                        </table>
-                    </div>
-                `;
-                /*return  `
-                    <div class="content">
-                        <div>
-                            <span class="beerName">${aBeer.beer}</span> - <span>${aBeer.brewery}</span>
-                        </div>
-                        <div class="beerDetails">
-                            <span style="width: 80%;">${aBeer.style}, ABV: ${abv}, IBU: ${ibu}</span><span>${price}</span>
-                        </div>
-                    </div>
-                `;*/
-            }
-            const populateTaps = (currentList) => {
-                console.log('populating taps');
-                const tapListDiv = document.getElementById("allTaps");
-                tapListDiv.innerHTML = '';
-                if (currentList && currentList.length > 0) {
-                    console.log('loading list');
-                    currentList.forEach(aBeer => {
-                        tapListDiv.innerHTML += beerDiv(aBeer);
-                    });
-                } else {
-                    console.log('no taps');
-                    tapListDiv.innerHTML = "<div style='text-align: center; width: 100%'><span>There is nothing on tap. Please click Edit Tap List in the upper right corner</span></div>";
-                }    
-            }
-
-            const getCurrentList = () => {
-                getTapList().then(function(response) {
-                    console.log('got tap list successfully: ' + JSON.stringify(response));
-                    populateTaps(response);
-                }).catch(function(error) {
-                    console.log('failed to get tap list: ' + error);
-                });
-            }    
-
+        <script> 
             openBeerDB().then(function(response) {
                 console.log('opened successfully');
                 getCurrentList();
@@ -76,26 +21,13 @@
             <img src="images/gear_icon.svg" alt="edit taplsit" height="24px" width="24px" />
         </a>
         <div class="hdrTitle">
-            JP's Current Taplist
+            JP's Taplist
         </div>
         <div class="wrapsBeerContainer">
             <div id="allTaps" class="beerContainer">
-                <div style="width: 50%;">
-                    <div>
-                        <span class="beerName">Psuedo Sue</span> - <span>Pipeworks Brewing Company</span>
-                    </div>
-                    <div class="beerDetails">
-                        <span style="width: 50%;">Hazy Pale Ale</span><span>ABV 5.8%</span><span>IBU 23</span><span>$5</span>
-                    </div>
-                </div>
-                <sdivpan style="width: 50%;">
-                    <div>
-                        <span class="beerName">Hopslam</span> - <span>Bells Brewing Company</span>
-                    </div>
-                    <div class="beerDetails">
-                        <span style="width: 50%;">Imperial IPA</span><span>ABV 9.8%</span><span>IBU 65</span><span>$7</span>
-                    </div>
-                </div>
+                <table id="tapTable" width="100%" height="100%">
+                    <!-- Taps get added programmatically here -->
+                </table>
             </div>
         </div>
     </body>
