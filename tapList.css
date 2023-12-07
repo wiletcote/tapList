@@ -10,7 +10,8 @@ body {
     color: black;
     height: 1.2em;
     font-size: 3em;
-    background-color: beige;
+    
+    background-image: linear-gradient(lightblue, white);
     text-align: center;
     position: absolute;
     top: -12.75em;
@@ -68,8 +69,15 @@ body {
 #tapTable {
     margin-top: 2em;
 }
-table, td {
-    border: 1px solid gray;
+table {
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+    border-collapse: collapse;
+}
+td {
+    border-top: 1px solid gray;
+    border-right: 1px solid gray;
+    border-bottom: 1px solid gray;
     border-collapse: collapse;
 }
 .smallTD {
