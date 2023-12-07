@@ -16,7 +16,7 @@
             const deleteCurrentTap = (id) => {
                 console.log('deleting tap ' + id);
                 deleteTap(id).then(function(response) {
-                    getCurrentList();
+                    getCurrentList(true);
                 }).catch(function(response) {
                     alert('Error Deleting Tap');
                 });
@@ -24,26 +24,7 @@
             const editCurrentTap = (id) => {
                 //populate and update, not add.
             }
-            //Div for showing a tap
-            // const beerDiv = (aBeer) => {
-            //     const abv = 'abv' in aBeer ? aBeer.abv : 'N/A';
-            //     const ibu = 'ibu' in aBeer ? aBeer.ibu : 'N/A';
-            //     const price = 'price' in aBeer ? aBeer.price : 'N/A';
-            //     return  `
-            //         <span style="width: 50%;">
-            //             <div>
-            //                 <span class="beerName">${aBeer.beer}</span> - <span>${aBeer.brewery}</span>
-            //                 <span>
-            //                    <!-- <button onclick='editCurrentTap(${aBeer.id})'>Edit</button> -->
-            //                     <button onclick='deleteCurrentTap(${aBeer.id})'>Delete</button>
-            //                 </span>    
-            //             </div>
-            //             <div class="beerDetails">
-            //                 <span style="width: 50%;">${aBeer.style}, ABV: ${abv}, IBU: ${ibu}</span><span>${price}</span>
-            //             </div>
-            //         </span>
-            //         `;
-            // }   
+            
             //If a matching brewery is found, modify beer list to only show beers from that brewery.     
             const filterBeers = (breweryIn) => {
                 console.log('finding beers for ' + breweryIn);
@@ -61,9 +42,9 @@
                 let matchingBeer = beerList.find(b => beerIn == b.name);
                 if (matchingBeer) {
                     let tapForm = document.getElementById('newTap').elements;
-                    tapForm["beerStyle"].value = matchingBeer.style;
                     tapForm["beerABV"].value = matchingBeer.abv;
                     tapForm["beerIBU"].value = matchingBeer.ibu;
+                    tapForm["beerStyle"].value = matchingBeer.style;
                 }
             }
             const isValid = (tapForm) => {
@@ -117,31 +98,19 @@
                     })
                 })
             }
-            //Display the taps on the page.
-            // const populateTaps = (currentList) => {
-            //     console.log('populating taps');
-            //     const tapListDiv = document.getElementById("currentList");
-            //     tapListDiv.innerHTML = '';
-            //     console.log('got current list: ' + currentList);
-            //     if (currentList) {
-            //         console.log('loading list');
-            //         currentList.forEach(aBeer => {
-            //             tapListDiv.innerHTML += beerDiv(aBeer);
-            //         });
-            //     } else {
-            //         console.log('no taps');
-            //         tapListDiv.innerHTML = "<div>No taps entered yet</div>";
-            //     }    
-            // }
-            //Get the current list of taps from the db and display them.
-            // const getCurrentList = () => {
-            //     getTapList().then(function(response) {
-            //         console.log('got tap list successfully: ' + JSON.stringify(response));
-            //         populateTaps(response);
-            //     }).catch(function(error) {
-            //         console.log('failed to get tap list: ' + error);
-            //     });
-            // }   
+
+            const populateStyles = () => {
+                let styleDataList = document.getElementById('styles');
+                styleDataList.replaceChildren();  //clear out the list first.
+                getBeerStyles().then(function(response) {
+                    styleList = response;
+                    styleList.forEach(aStyle => {
+                        let option = document.createElement('option');
+                        option.value = aStyle.name;
+                        styleDataList.appendChild(option);
+                    })
+                })
+            }
             
             //Save the entered tap information.  TODO:  Validation? 
             const saveTap = (tapForm) => {
@@ -150,7 +119,7 @@
                 addTap(tapForm).then(function(response) {
                     console.log('reload tap list');
                     document.getElementById('newTap').reset();
-                    getCurrentList();
+                    getCurrentList(true);
                     populateBreweryList();
                     populateBeerList();
                 }).catch(function(error) {
@@ -160,9 +129,10 @@
             //Open the DB, initialize if necessary, get the current list of taps, breweries, and beers
             openBeerDB().then(function(response) {
                 console.log('opened successfully');
-                getCurrentList();
+                getCurrentList(true);
                 populateBreweryList();
                 populateBeerList();
+                populateStyles();
             }).catch(function(error) {
                 console.log('failed to open: ' + error);
             });
@@ -202,11 +172,11 @@
                             </tr>
                             <tr>
                                 <td><label for="beerStyle">Style:</label></td>
-                                <td><input id="beerStyle" name="beerStyle" type="text" ></td>
+                                <td><input list="styles" id="beerStyle" ><datalist id="styles"></datalist></td>
                             </tr>
                             <tr>
                                 <td><label for="beerABV">ABV:</label></td>
-                                <td><input id="beerABV" name="beerABV" type="text" ></td>
+                                <td><input id="beerABV" name="beerABV" type="text" >%</td>
                             </tr>
                             <tr>
                                 <td><label for="beerIBU">IBU:</label></td>
@@ -214,7 +184,7 @@
                             </tr>
                             <tr>
                                 <td><label for="beerPrice">Price:</label></td>
-                                <td><input id="beerPrice" name="beerPrice" type="text" ></td>
+                                <td>$<input id="beerPrice" name="beerPrice" type="text" ></td>
                             </tr>
                         </table>
                     </div>

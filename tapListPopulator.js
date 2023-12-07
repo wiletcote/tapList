@@ -1,20 +1,21 @@
-const getCurrentList = () => {
+const getCurrentList = (showDelete) => {
     getTapList().then(function(response) {
         console.log('got tap list successfully: ' + JSON.stringify(response));
-        populateTaps(response);
+        populateTaps(response, showDelete);
     }).catch(function(error) {
         console.log('failed to get tap list: ' + error);
     });
 }    
 
-const beerDiv = (aBeer) => {
-    const abv = 'abv' in aBeer ? aBeer.abv + '%' : 'N/A';
-    const ibu = 'ibu' in aBeer ? aBeer.ibu : 'N/A';
+const beerDiv = (aBeer, showDelete) => {
+    const abv = 'abv' in aBeer && aBeer.abv ? aBeer.abv + '%' : 'N/A';
+    const ibu = 'ibu' in aBeer && aBeer.ibu ? aBeer.ibu : 'N/A';
     const price = 'price' in aBeer ? '$' + aBeer.price : 'N/A';
     return  `
         <td width="38%">
+        ${showDelete ? `<a class="floatRight" href="javascript:deleteCurrentTap(${aBeer.id})"><img src="images/delete.svg" height="24px" width="24px" /></a>` : ''}
             <span class="beerName">${aBeer.beer}</span> - <span style="width: 80%;">${aBeer.style}</span><br> 
-            <span class="aboutBeer">${aBeer.brewery}</span>
+            <span class="aboutBeer">${aBeer.brewery}</span> - <span class="abv">IBU: ${ibu}</span>
         </td>
         <td class="smallTD">
             <span class="abv">ABV<br>${abv}</span>
@@ -25,7 +26,7 @@ const beerDiv = (aBeer) => {
     `;
 }
 
-const populateTaps = (currentList) => {
+const populateTaps = (currentList, showDelete) => {
     console.log('populating taps');
     const allTaps = document.getElementById("allTaps");
     let beerTable = '<table id="tapTable" width="100%">';
@@ -37,7 +38,7 @@ const populateTaps = (currentList) => {
             if (tapCnt % 2 === 0) {
                 beerTable += '<tr>'
             }
-            beerTable += beerDiv(aBeer);
+            beerTable += beerDiv(aBeer, showDelete);
             if (tapCnt % 2 === 0) {
                 beerTable += '<td class="dividerTD"></td>';
             }
