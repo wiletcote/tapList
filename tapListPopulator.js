@@ -14,7 +14,7 @@ const beerDiv = (aBeer, showDelete) => {
     return  `
         <td width="38%">
         ${showDelete ? `<a class="floatRight" href="javascript:deleteCurrentTap(${aBeer.id})"><img src="images/delete.svg" height="24px" width="24px" /></a>` : ''}
-            <span class="beerName">${aBeer.beer}</span> - <span style="width: 80%;">${aBeer.style}</span><br> 
+            <span class="beerName">${aBeer.beer}</span> - <span class="beerStyle">${aBeer.style}</span><br> 
             <span class="aboutBeer">${aBeer.brewery}</span> - <span class="abv">IBU: ${ibu}</span>
         </td>
         <td class="smallTD">
