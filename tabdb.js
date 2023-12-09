@@ -168,7 +168,7 @@ const addTap = (newTap) => {
                 city: newTap.breweryCity.value,
                 state: newTap.breweryState.value,
                 beer: newTap.beer.value,
-                style: newTap.beerStyle.label,
+                style: newTap.beerStyle.value,
                 abv: newTap.beerABV.value,
                 ibu: newTap.beerIBU.value,
                 price: newTap.beerPrice.value
