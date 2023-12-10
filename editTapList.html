@@ -148,7 +148,7 @@
                         <h2>Select Brewery</h2>
                         <table>
                             <tr>
-                                <td><label for="brewery">Brewery:</label></td>
+                                <td><label class="required" for="brewery">Brewery:</label></td>
                                <td>
                                     <input list="breweries" id="brewery" oninput="filterBeers(brewery.value)"><datalist id="breweries"></datalist>
                                </td>
@@ -167,7 +167,7 @@
                         <h2>Select Beer</h2>
                         <table>
                             <tr>
-                                <td><label for="beers">Name:</label></td>
+                                <td><label class="required" for="beers">Name:</label></td>
                                 <td><input list="beers" id="beer" oninput="setBeerData(beer.value)" ><datalist id="beers"></datalist></td>
                             </tr>
                             <tr>
@@ -183,7 +183,7 @@
                                 <td><input id="beerIBU" name="beerIBU" type="text" ></td>
                             </tr>
                             <tr>
-                                <td><label for="beerPrice">Price:</label></td>
+                                <td><label class="required" for="beerPrice">Price:</label></td>
                                 <td>$<input id="beerPrice" name="beerPrice" type="text" ></td>
                             </tr>
                         </table>

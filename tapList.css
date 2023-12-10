@@ -10,7 +10,7 @@ body {
     color: black;
     height: 1.2em;
     font-size: 3em;
-    
+    font-family: Miltonian Tattoo, serif;
     background-image: linear-gradient(lightblue, white);
     text-align: center;
     position: absolute;
@@ -29,6 +29,8 @@ body {
 .beerContainer {
     display: flex;
     justify-content: space-between;
+    font-family: 'Architects Daughter', cursive;  
+    /* font-family: 'Permanent Marker', cursive; */
     flex-wrap: wrap;
     width: 95%;
     height: 100%;
@@ -49,7 +51,6 @@ body {
 }
 .beerName {
     font-size: 2.5em;
-    font-weight: bold;
     padding-left: .25em;
 }
 .aboutBeer {
@@ -90,6 +91,8 @@ td {
 }
 .dividerTD {
     width: 2%;
+    border-top: none;
+    border-bottom: none;
 }
 .abv {
     font-size: 1.25em;

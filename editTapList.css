@@ -45,3 +45,7 @@ table, td {
     font-size: 2em;
     color: lightseagreen;
 }
+.required:after {
+    content:" *";
+    color: red;
+}
