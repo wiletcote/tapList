@@ -1,5 +1,5 @@
 html {
-    background-image: url('images/woodbackground.jpg');
+    background-image: url('images/christmas2.jpg');
 }
 body {
     /* color: white; */
@@ -34,7 +34,7 @@ body {
     flex-wrap: wrap;
     width: 95%;
     height: 100%;
-    margin-top: 3em;
+    margin-top: 4%;
     background-image: url('images/blackboard.jpg');
 }
 .beerContainer > div:first-child, .beerContainer > div:nth-child(2) {

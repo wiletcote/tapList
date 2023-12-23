@@ -168,23 +168,21 @@
                         <table>
                             <tr>
                                 <td><label class="required" for="beers">Name:</label></td>
-                                <td><input list="beers" id="beer" oninput="setBeerData(beer.value)" ><datalist id="beers"></datalist></td>
+                                <td colspan="3"><input list="beers" id="beer" oninput="setBeerData(beer.value)" ><datalist id="beers"></datalist></td>
                             </tr>
                             <tr>
                                 <td><label for="beerStyle">Style:</label></td>
-                                <td><input list="styles" id="beerStyle" ><datalist id="styles"></datalist></td>
+                                <td colspan="3"><input width="80px" list="styles" id="beerStyle" ><datalist id="styles"></datalist></td>
                             </tr>
                             <tr>
                                 <td><label for="beerABV">ABV:</label></td>
-                                <td><input id="beerABV" name="beerABV" type="text" >%</td>
-                            </tr>
-                            <tr>
+                                <td><input style="width: 3em;" id="beerABV" name="beerABV" type="text" >%</td>
                                 <td><label for="beerIBU">IBU:</label></td>
-                                <td><input id="beerIBU" name="beerIBU" type="text" ></td>
+                                <td><input style="width: 3em;" id="beerIBU" name="beerIBU" type="text" ></td>
                             </tr>
                             <tr>
                                 <td><label class="required" for="beerPrice">Price:</label></td>
-                                <td>$<input id="beerPrice" name="beerPrice" type="text" ></td>
+                                <td colspan="3">$<input style="width: 2em" id="beerPrice" name="beerPrice" type="text" ></td>
                             </tr>
                         </table>
                     </div>

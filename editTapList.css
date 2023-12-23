@@ -49,3 +49,7 @@ table, td {
     content:" *";
     color: red;
 }
+
+label, input {
+    font-size: 1.5em;
+}
