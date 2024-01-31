@@ -8,17 +8,18 @@ const getCurrentList = (showDelete) => {
 }    
 
 const beerDiv = (aBeer, showDelete) => {
-    const abv = 'abv' in aBeer && aBeer.abv ? aBeer.abv + '%' : 'N/A';
-    const ibu = 'ibu' in aBeer && aBeer.ibu ? aBeer.ibu : 'N/A';
+    const abv = 'abv' in aBeer && aBeer.abv ? `ABV<br>${aBeer.abv}%` : '';
+    const ibu = 'ibu' in aBeer && aBeer.ibu ? ` - IBU: ${aBeer.ibu}` : '';
     const price = 'price' in aBeer ? '$' + aBeer.price : 'N/A';
+    const style = 'style' in aBeer && aBeer.style ? ` - ${aBeer.style}` : '';
     return  `
         <td width="38%">
         ${showDelete ? `<a class="floatRight" href="javascript:deleteCurrentTap(${aBeer.id})"><img src="images/delete.svg" height="24px" width="24px" /></a>` : ''}
-            <span class="beerName">${aBeer.beer}</span> - <span class="beerStyle">${aBeer.style}</span><br> 
-            <span class="aboutBeer">${aBeer.brewery}</span> - <span class="abv">IBU: ${ibu}</span>
+            <span class="beerName">${aBeer.beer}</span><span class="beerStyle">${style}</span><br> 
+            <span class="aboutBeer">${aBeer.brewery}</span><span class="abv">${ibu}</span>
         </td>
         <td class="smallTD">
-            <span class="abv">ABV<br>${abv}</span>
+            <span class="abv">${abv}</span>
         </td>
         <td class="smallTD">
             <span class="price" >${price}</span>
