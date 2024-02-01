@@ -53,3 +53,13 @@ table, td {
 label, input {
     font-size: 1.5em;
 }
+
+#clearBtn {
+    padding: 5px 5px;
+    font-size: small;
+    border: 0 none;
+    cursor: pointer;
+    margin-left: 10px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}

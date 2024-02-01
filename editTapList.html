@@ -27,7 +27,6 @@
             
             //If a matching brewery is found, modify beer list to only show beers from that brewery.     
             const filterBeers = (breweryIn) => {
-                console.log('finding beers for ' + breweryIn);
                 let breweryDataList = document.getElementById('breweries');
                 let matchingBrewery = breweryList.find(b => breweryIn === b.name);
                 if (matchingBrewery) {
@@ -114,10 +113,8 @@
             
             //Save the entered tap information.  TODO:  Validation? 
             const saveTap = (tapForm) => {
-                console.log('in saveTap');
                 if (!isValid(tapForm)) return;
                 addTap(tapForm).then(function(response) {
-                    console.log('reload tap list');
                     document.getElementById('newTap').reset();
                     getCurrentList(true);
                     populateBreweryList();
@@ -136,6 +133,22 @@
             }).catch(function(error) {
                 console.log('failed to open: ' + error);
             });
+
+            const clearBrewery = () => {
+                console.log('clearing brewery');
+                document.getElementById('brewery').value = '';
+                document.getElementById('breweryCity').value = '';
+                document.getElementById('breweryState').value = '';
+            }
+
+            const clearBeer = () => {
+                console.log('clearing beer');
+                document.getElementById('beer').value = '';
+                document.getElementById('beerStyle').value = '';
+                document.getElementById('beerABV').value = '';
+                document.getElementById('beerIBU').value = '';
+                document.getElementById('beerPrice').value = '';
+            }
         </script>
         <div>
             <a class="floatRight" href="tapList.html">
@@ -145,7 +158,7 @@
             <form name="newTap" id="newTap" action="" method="GET">
                 <div class="tapRow">
                     <div>
-                        <h2>Select Brewery</h2>
+                        <h2>Select Brewery<input type="button" id="clearBtn" value="Clear" onclick="clearBrewery()"></h2>
                         <table>
                             <tr>
                                 <td><label class="required" for="brewery">Brewery:</label></td>
@@ -164,7 +177,7 @@
                         </table>
                     </div>
                     <div>
-                        <h2>Select Beer</h2>
+                        <h2>Select Beer<input type="button" id="clearBtn" onclick="clearBeer()" value="Clear" ></h2>
                         <table>
                             <tr>
                                 <td><label class="required" for="beers">Name:</label></td>
