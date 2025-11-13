@@ -24,6 +24,9 @@
         <a class="floatRight" href="editTapList.html">
             <img src="images/gear_icon.svg" alt="edit taplsit" height="24px" width="24px" />
         </a>
+        <div id="winSize" class="floatLeft" style="color: white;">
+            
+        </div>
         <div class="hdrTitle">
             JP's Taplist
         </div>
@@ -34,5 +37,9 @@
                 </table>
             </div>
         </div>
+        <script>
+            sizeDiv = document.getElementById("winSize")
+            sizeDiv.innerHTML = window.screen.availWidth + " x " + window.screen.availHeight
+        </script>
     </body>
 </html>

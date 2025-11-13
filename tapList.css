@@ -1,5 +1,7 @@
 html {
-    background-image: url('images/Bengals-background.jpg');
+    /* background-image: url('images/Bengals-background.jpg'); */
+    /* background-image: url('images/halloween.jpg'); */
+    /* background-size: 100% 100%; */
     background-size: cover;
 }
 body {
@@ -70,6 +72,9 @@ body {
 }
 .floatRight {
     float: right;
+}
+.floatLeft {
+    float: left;
 }
 
 #tapTable {
