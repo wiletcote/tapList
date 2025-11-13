@@ -20,6 +20,35 @@
             }).catch(function(error) {
                 console.log('failed to open: ' + error);
             });
+            const getImage = (month) => {
+                switch (month){
+                    case 0:
+                    case 1:
+                        return "url('images/wooden-table-snow-resized.jpg')";
+                        break;
+                    case 2:
+                        return "url('images/stPatties4.jpg')";
+                        break;
+                    case 8:
+                        return "url('images/Bengals-background.jpg')";
+                        break;
+                    case 9:
+                        return "url('images/halloween.jpg')";
+                        break;
+                    case 10:
+                        return "url('images/thanksgiving3.jpg')";
+                        break;
+                    case 11:
+                        return "url('images/wooden-table-snow-resized.jpg')";
+                        break;
+                    default:
+                        return "url('images/woodbackground.jpg')";
+                }
+            }
+            const curDate = new Date();
+            let backImg = "";
+            document.body.style.backgroundImage = getImage(curDate.getMonth());
+            document.body.style.backgroundSize = "100% 100%"
         </script>
         <a class="floatRight" href="editTapList.html">
             <img src="images/gear_icon.svg" alt="edit taplsit" height="24px" width="24px" />
